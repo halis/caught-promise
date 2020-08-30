@@ -1,2 +1,2 @@
 # caught-promise
-This Promise will never throw and Unhandled Rejection (hopefully)
+This Promise will never throw an Unhandled Rejection (hopefully)
