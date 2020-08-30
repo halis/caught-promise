@@ -57,11 +57,14 @@ TypeError: console.notAFunction6 is not a function
 ```
 
 Notice that we have lots of errors printed, but none of them are unhandled rejections.
-The idea is that you pass CaughtPromise a typical promise function called handler:
+The idea is that you pass CaughtPromise a typical promise function:
 `(resolve reject) => ...`
-And then you pass it a function catchHandler you want to run whenever there is an error:
+
+And then you pass it a function that you want to run whenever there is an error:
 `error => console.error(error)`
 
-And anytime there is an error, in any of the `then` blocks, it's caught and handled by the catchHandler.
+And anytime there is an error, in any of the `then` blocks, it's caught and handled.
 
-I think eventually Node plans on exiting the process 
+I think eventually Node plans on exiting the process if a Promise has an unhandled rejection, so use this when you don't want unhandled rejections.
+
+Say you're processing a message from a queue and if there's an error you just want to log and continue processing. Perfect scenario.
