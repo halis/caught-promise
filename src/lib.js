@@ -1,11 +1,11 @@
 
 class CaughtPromise extends Promise {}
 
-CaughtPromise.from = CaughtPromise.of = CaughtPromise.create = args => {
+CaughtPromise.from = CaughtPromise.of = CaughtPromise.create = (...args) => {
     if (args == null) {
         throw new Error('args is required')
     }
-    const {handler, errorHandler} = args
+    const [handler, errorHandler] = args
     if (handler == null) {
         throw new Error('handler is required')
     } else if (errorHandler == null) {
