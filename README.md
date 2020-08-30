@@ -2,44 +2,19 @@
 This Promise will never throw an Unhandled Rejection (hopefully)
 
 ```js
-
 const CaughtPromise = require('./lib')
 
-CaughtPromise.from({
-    handler: resolve => {
+CaughtPromise.from(
+    resolve => {
         console.log('hello')
         console.notAFunction1()
         resolve()
     },
-    errorHandler: e => console.error(e),
-})
+    e => console.error(e)
+)
 .then(() => {
     console.log('world')
     console.notAFunction2()
-
-    new Promise(() => {
-        console.log('hi1')
-        console.asdfasdfasdfasdf()
-
-        new Promise(() => {
-            console.log('hi2')
-            console.asdfasdfasdfasdf()
-        }).then(() => {
-            console.log('hi3')
-            console.asdfasdfasdfasdf()
-        })()
-    }).then(() => {
-        console.log('hi4')
-        console.asdfasdfasdfasdf()
-    })
-    
-    return new Promise(() => {
-        console.log('hi5')
-        console.asdfasdfasdfasdf()
-    }).then(() => {
-        console.log('hi6')
-        console.asdfasdfasdfasdf()
-    })
 })
 .then(() => console.notAFunction3())
 .then(() => console.notAFunction4())
@@ -50,11 +25,10 @@ process.on('unhandledRejection', () => {
     throw new Error('CaughtPromise threw an unhandledRejection')
 })
 
-
 /* Output:
 hello
 TypeError: console.notAFunction1 is not a function
-    at handler (/Users/chris/cx/caught-promise/src/lib.integration.js:7:17)
+    at /Users/chris/cx/caught-promise/src/lib.integration.js:7:17
     at new Promise (<anonymous>)
     at Function.CaughtPromise.from.CaughtPromise.of.CaughtPromise.create (/Users/chris/cx/caught-promise/src/lib.js:15:21)
     at Object.<anonymous> (/Users/chris/cx/caught-promise/src/lib.integration.js:4:15)
@@ -69,16 +43,16 @@ TypeError: console.notAFunction2 is not a function
     at /Users/chris/cx/caught-promise/src/lib.integration.js:14:13
     at processTicksAndRejections (internal/process/task_queues.js:97:5)
 TypeError: console.notAFunction3 is not a function
-    at /Users/chris/cx/caught-promise/src/lib.integration.js:34:21
+    at /Users/chris/cx/caught-promise/src/lib.integration.js:16:21
     at processTicksAndRejections (internal/process/task_queues.js:97:5)
 TypeError: console.notAFunction4 is not a function
-    at /Users/chris/cx/caught-promise/src/lib.integration.js:35:21
+    at /Users/chris/cx/caught-promise/src/lib.integration.js:17:21
     at processTicksAndRejections (internal/process/task_queues.js:97:5)
 TypeError: console.notAFunction5 is not a function
-    at /Users/chris/cx/caught-promise/src/lib.integration.js:36:21
+    at /Users/chris/cx/caught-promise/src/lib.integration.js:18:21
     at processTicksAndRejections (internal/process/task_queues.js:97:5)
 TypeError: console.notAFunction6 is not a function
-    at /Users/chris/cx/caught-promise/src/lib.integration.js:37:21
+    at /Users/chris/cx/caught-promise/src/lib.integration.js:19:21
     at processTicksAndRejections (internal/process/task_queues.js:97:5)
 ```
 
